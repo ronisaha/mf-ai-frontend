@@ -1,0 +1,10 @@
+{
+  "/_QUERIES": {
+    "target": "http://10.42.65.72:3000/",
+    "secure": false
+  },
+  "/predict-loan-status": {
+    "target": "http://10.44.22.125:8082/",
+    "secure": false
+  }
+}

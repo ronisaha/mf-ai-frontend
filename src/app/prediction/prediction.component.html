@@ -1,0 +1,8 @@
+<mat-list *ngIf="data">
+  <mat-list-item>
+    <button matRipple (click)="predict()" mat-raised-button color="accent">Predict</button>
+  </mat-list-item>
+  <mat-list-item>
+    {{type}} : {{score}}
+  </mat-list-item>
+</mat-list>
