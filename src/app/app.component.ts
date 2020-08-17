@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {LoanDataProviderService} from './loan-data-provider.service';
 import {catchError} from 'rxjs/operators';
+import {PredictionComponent} from './prediction/prediction.component';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +12,20 @@ import {catchError} from 'rxjs/operators';
 export class AppComponent {
   title = 'ai-tool';
   response = null;
-  loanId = 2908;
+  @ViewChild(PredictionComponent) child: PredictionComponent;
+  loanId = null;
 
   constructor(private spinner: NgxSpinnerService, private loanProvider: LoanDataProviderService) {
   }
-  // tslint:disable-next-line:typedef
-  public loadDetails() {
+
+  public loadDetails(): void {
+    this.response = null;
+    this.child.reset();
+
+    if (this.loanId === '' || this.loanId === null) {
+      return;
+    }
+
     this.spinner.show();
     this.loanProvider.get(this.loanId)
       .subscribe((data) => {
@@ -25,7 +34,6 @@ export class AppComponent {
       }, err => {
         this.spinner.hide();
       });
-    console.log('ok');
   }
 
   // tslint:disable-next-line:typedef

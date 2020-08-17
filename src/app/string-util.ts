@@ -26,6 +26,11 @@ function extname(str: string): string {
   return (index === -1) ? '' : ext;
 }
 
+export function normalizeDate(src: string): string
+{
+  return src.replace('T', ' ');
+}
+
 export function humanize(str: string): string {
   str = str || '';
   str = str.toString(); // might be a number

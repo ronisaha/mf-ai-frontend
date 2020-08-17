@@ -1,22 +1,34 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from '../environments/environment';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 
+export interface PredictionResponse {
+  type: string;
+  score: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class ModelConsumerService {
+  private predictions = ['Good', 'Bad'];
 
   private url = environment.MODEL_API_BASE_URL;
 
   constructor(private http: HttpClient) {
   }
 
-  predict(data: any): Observable<any> {
+  predict(data: any): Observable<PredictionResponse> {
     return this.http.post(this.url, data)
       .pipe(
+        map((d: any) => {
+          return {
+            type: this.predictions[parseInt(d.prediction, 10)],
+            score: d['score_' + d.prediction]
+          };
+        }),
         catchError(this.handleError)
       );
   }

@@ -10,32 +10,35 @@ import {ModelConsumerService} from '../model-consumer.service';
 export class PredictionComponent implements OnInit {
 
   @Input() data: any;
+  pending: boolean;
 
-  prediction = ['Bad', 'Good'];
+  prediction = ['Good', 'Bad'];
 
-  type = 'Good';
+  result: {type: string, score: string};
+  type = '';
   score = '';
 
   constructor(private spinner: NgxSpinnerService, private model: ModelConsumerService) {
   }
 
   ngOnInit(): void {
+    this.pending = true;
   }
 
-  // tslint:disable-next-line:typedef
-  public predict() {
+  public predict(): void {
     this.spinner.show();
+    this.pending = true;
     this.model.predict(this.data).subscribe(data => {
-      this.type = this.prediction[parseInt(data.prediction, 10)];
-      this.score = data['score_' + data.prediction];
+      this.result = data;
+      this.pending = false;
+      this.spinner.hide();
     },
       error => {
           this.spinner.hide();
-          this.reset();
       });
   }
 
-  reset() {
-    console.log('reset');
+  reset(): void {
+    this.pending = true;
   }
 }

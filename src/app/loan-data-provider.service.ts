@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {environment} from '../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
+import {normalizeDate} from './string-util';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,14 @@ export class LoanDataProviderService {
       params: {flag: '3', loan_id: loanId + ''}
     })
       .pipe(
-        map((x) => x[0]),
+        map((x) => {
+          const d = x[0];
+          d.date_of_birth = normalizeDate(d.date_of_birth);
+          d.disbursement_date = normalizeDate(d.disbursement_date);
+          d.loan_half_cycle_date = normalizeDate(d.loan_half_cycle_date);
+          d.membership_date = normalizeDate(d.membership_date);
+          return d;
+        }),
         catchError(this.handleError)
       );
   }
