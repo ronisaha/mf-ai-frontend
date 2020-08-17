@@ -3,6 +3,8 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {LoanDataProviderService} from './loan-data-provider.service';
 import {catchError} from 'rxjs/operators';
 import {PredictionComponent} from './prediction/prediction.component';
+import {MatDialog} from '@angular/material/dialog';
+import {NotFoundDialogComponent} from './not-found-dialog/not-found-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,7 @@ export class AppComponent {
   @ViewChild(PredictionComponent) child: PredictionComponent;
   loanId = null;
 
-  constructor(private spinner: NgxSpinnerService, private loanProvider: LoanDataProviderService) {
+  constructor(private spinner: NgxSpinnerService, private loanProvider: LoanDataProviderService, private dialog: MatDialog) {
   }
 
   public loadDetails(): void {
@@ -32,6 +34,7 @@ export class AppComponent {
         this.response = data;
         this.spinner.hide();
       }, err => {
+        this.dialog.open(NotFoundDialogComponent);
         this.spinner.hide();
       });
   }

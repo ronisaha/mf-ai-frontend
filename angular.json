@@ -16,10 +16,6 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "allowedCommonJsDependencies": [
-            "string-humanize",
-            "humanize"
-          ],
           "options": {
             "outputPath": "dist/ai-tool",
             "index": "src/index.html",

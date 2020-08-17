@@ -25,6 +25,9 @@ export class LoanDataProviderService {
       .pipe(
         map((x) => {
           const d = x[0];
+          if (d.disbursement_date === null) {
+            throwError('Not found');
+          }
           d.date_of_birth = normalizeDate(d.date_of_birth);
           d.disbursement_date = normalizeDate(d.disbursement_date);
           d.loan_half_cycle_date = normalizeDate(d.loan_half_cycle_date);

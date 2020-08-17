@@ -4,7 +4,6 @@ import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatGridListModule} from '@angular/material/grid-list';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {FormsModule} from '@angular/forms';
@@ -19,13 +18,16 @@ import { PredictionComponent } from './prediction/prediction.component';
 import { HumanizePipe } from './humanize.pipe';
 import {HttpClientModule} from '@angular/common/http';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {MatDialogModule} from '@angular/material/dialog';
+import { NotFoundDialogComponent } from './not-found-dialog/not-found-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoadDetailsComponent,
     PredictionComponent,
-    HumanizePipe
+    HumanizePipe,
+    NotFoundDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +44,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MatButtonModule,
     MatCardModule,
     MatListModule,
+    MatDialogModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
